@@ -32,6 +32,7 @@
              steps {
                  script {
                      echo "Deploying application"
+                     echo "commit changing"
                  }
              }
          }
