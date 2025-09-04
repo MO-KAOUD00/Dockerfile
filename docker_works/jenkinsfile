@@ -10,7 +10,8 @@
 
              steps {
                  script {
-                     sh 'docker build -t ${IMAGE_NAME}:${JOB_NAME}_${BUILD_NUMBER} -f docker_works/Dockerfile docker_works'
+                     sh "docker build -t ${IMAGE_NAME}:${BRANCH_NAME}_${BUILD_NUMBER} -f docker_works/Dockerfile docker_works"
+
                  }
              }
          }
@@ -21,7 +22,8 @@
                       withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh """
                         echo "${PASSWORD}" | docker login -u "${USERNAME}" --password-stdin
-                        docker push ${IMAGE_NAME}:${JOB_NAME}_${BUILD_NUMBER}
+                        docker push ${IMAGE_NAME}:${BRANCH_NAME}_${BUILD_NUMBER}
+
 
                         """
                      }
