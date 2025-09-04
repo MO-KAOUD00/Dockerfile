@@ -1,24 +1,29 @@
  pipeline {
      agent any
-     parameters{
-        string(name: 'VERSION' , defaultValue: '' , description: 'showing the version')
+     environment{
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
+        IMAGE_NAME = "mohamed206/docker-jenkins
      }
      stages {
 
-         stage('build') {
+         stage('build docker image') {
 
              steps {
                  script {
-                     echo "building application"
-                     echo "Version = ${params.VERSION}"
+                     sh 'docker build -t ${IMAGE_NAME}:${JOB_NAME}_${BUILD_NUMBER} .'
                  }
              }
          }
 
-         stage('test') {
+         stage('login and push to docker_hub') {
              steps {
                  script {
-                     echo "testing application"
+                      withCredentials([usernamePassword(credentialsId: env.DOCKERHUB_CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh """
+                        echo "${PASSWORD}" | docker login -u "${USERNAME}" --password-stdin
+                        docker push ${IMAGE_NAME}:${BUILD_NUMBER}
+                        """
+
                  }
              }
          }
