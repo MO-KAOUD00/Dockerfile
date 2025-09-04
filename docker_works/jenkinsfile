@@ -10,7 +10,7 @@
 
              steps {
                  script {
-                     sh 'docker build -t ${IMAGE_NAME}:${JOB_NAME}_${BUILD_NUMBER} .'
+                     sh 'docker build -t ${IMAGE_NAME}:${JOB_NAME}_${BUILD_NUMBER} -f docker_works/Dockerfile docker_works'
                  }
              }
          }
