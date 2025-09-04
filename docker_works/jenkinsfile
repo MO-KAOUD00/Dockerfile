@@ -2,7 +2,7 @@
      agent any
      environment{
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
-        IMAGE_NAME = "mohamed206/docker-jenkins
+        IMAGE_NAME = "mohamed206/docker-jenkins"
      }
      stages {
 
